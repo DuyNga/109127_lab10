@@ -1,6 +1,8 @@
 package prob4;
-import java.util.*;
-import java.util.function.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.function.BiPredicate;
 
 
 public class Main {
@@ -15,9 +17,9 @@ public class Main {
 		return false;	
 	}
 	
-	public static boolean contains2(List<Employee> list, Employee e, 
-			BiPredicate<Employee,Employee> pred2) {
-		for(Employee emp: list) {
+	public static <T> boolean contains2(List<? extends T> list, T  e, 
+			BiPredicate<? super T,? super T> pred2) {
+		for(T emp: list) {
 			if(emp == null && e == null) return true;
 			if(emp == null || e == null) continue;
 			if(pred2.test(emp, e)) return true;
@@ -48,9 +50,9 @@ public class Main {
 		list.add(new Manager(1001, "Joe", 50000, 500));
 		
 		Manager m = new Manager(1001, "Joe", 50000, 500);
-//		boolean foundIt = Main.contains3(list, m, 
-//				(Employee e1, Employee e2) -> e1.getId()==e2.getId());
-//		System.out.println(foundIt);		
+		boolean foundIt = Main.contains2(list, m, 
+				(Employee e1, Employee e2) -> e1.getId()==e2.getId());
+		System.out.println(foundIt);		
 	}
 	
 	public static void test4() {
@@ -60,9 +62,9 @@ public class Main {
 		list.add(new Manager(1001, "Joe", 50000, 500));
 		
 		Manager m = new Manager(1001, "Joe", 50000, 500);
-//		boolean foundIt = Main.contains3(list, m, 
-//			(Employee e, Person p) -> e.getName().equals(p.getName()));
-//		System.out.println(foundIt);		
+		boolean foundIt = Main.contains2(list, m, 
+			(Employee e, Person p) -> e.getName().equals(p.getName()));
+		System.out.println(foundIt);		
 	}
 	
 	public static void test5() {
@@ -72,15 +74,19 @@ public class Main {
 		list.add(new CheckingAccount(1003, 125.00));
 		
 		Account a = new CheckingAccount(1002, 35.00);
-//		boolean foundIt = Main.contains4(list, a, 
-//			(Account a1, Account a2) -> a1.getAcctId()==a2.getAcctId());
-//		System.out.println(foundIt);		
+		boolean foundIt = Main.contains2(list, a, 
+			(Account a1, Account a2) -> a1.getAcctId()==a2.getAcctId());
+		System.out.println(foundIt);		
 	}
 	
 	
 	
 	public static void main(String[] args) {
 		test1();
+		test2();
+		test3();
+		test4();
+		test5();
 	}	
 		
 		
